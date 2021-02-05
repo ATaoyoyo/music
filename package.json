@@ -2,6 +2,16 @@
   "name": "music",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "react",
+    "react-hooks",
+    "music",
+    "better-scroll",
+    "immutable",
+    "redux",
+    "react-redux",
+    "axios"
+  ],
   "dependencies": {
     "@better-scroll/core": "^2.2.0",
     "@craco/craco": "^6.1.0",
