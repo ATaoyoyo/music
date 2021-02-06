@@ -12,7 +12,11 @@ const Icon = styled.div`
     display: block;
     width: 45px;
     height: 45px;
-    background-color: #f66;
+    text-align: center;
+    line-height: 45px;
+    font-size: 18px;
+    color: #d43c33;
+    background-color: rgba(255, 102, 102, 0.2);
     border-radius: 50%;
   }
 
@@ -20,7 +24,7 @@ const Icon = styled.div`
     display: inline-block;
     width: 100%;
     margin-top: 3px;
-    font-size: 18px;
+    font-size: 0.75rem;
     color: #333;
     text-align: center;
   }

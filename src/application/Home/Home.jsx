@@ -105,6 +105,20 @@ const Home = (props) => {
     author: `['artist']['name']`,
   }
 
+  // 发现图标
+  const findIcons = [
+    {icon: 'calendar-day', text: '每日推荐'},
+    {icon: 'broadcast-tower', text: '私人FM'},
+    {icon: 'th-list', text: '歌单'},
+    {icon: 'chart-bar', text: '排行榜'},
+    {icon: 'headset', text: '直播'},
+    {icon: 'compact-disc', text: '数字专辑'},
+    {icon: 'home', text: '歌房'},
+    {icon: 'gamepad', text: '游戏专区'},
+  ]
+
+
+
   return (
     <HomeContainer id="wrapper">
       <Header left={leftIcon} center={center} right={rightText} />
@@ -112,7 +126,7 @@ const Home = (props) => {
       <Scroll ref={scrollRef} direction="vertical" onScroll={forceCheck}>
         <Content>
           <Banner banners={bannerListJS} />
-          <Icons />
+          <Icons icons={findIcons} />
           <Recommend
             desc="推荐歌单"
             recommend={recommendListJS}
