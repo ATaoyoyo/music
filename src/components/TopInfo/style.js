@@ -20,8 +20,9 @@ const Top = styled.div`
     justify-content: center;
     width: 50px;
     height: 20px;
-    font-size: 12px;
-    color: #666;
+    font-size: 10px;
+    font-weight: 330;
+    color: #333;
     border-radius: 20px;
     background-color: #fff;
     border: 1px solid #eee;

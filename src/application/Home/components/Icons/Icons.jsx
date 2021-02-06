@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper-bundle.css'
 
+import FIcon from '../../../../components/Icon/Icon'
+
 import { Icon, SwiperContainer } from './style'
 
-const Icons = () => {
+const Icons = ({ icons }) => {
   const [spaceBetween, setSpaceBetween] = useState(-10)
 
   return (
@@ -22,12 +24,14 @@ const Icons = () => {
           clearTimeout(timer)
         }}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => {
+        {icons.map((item) => {
           return (
-            <SwiperSlide key={item}>
+            <SwiperSlide key={item.text}>
               <Icon>
-                <i className="icon" />
-                <span className="icon-text">{item}</span>
+                <i className="icon">
+                  <FIcon icon={item.icon} />
+                </i>
+                <span className="icon-text">{item.text}</span>
               </Icon>
             </SwiperSlide>
           )

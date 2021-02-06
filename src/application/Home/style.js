@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const HomeContainer = styled.div`
   position: absolute;
-  padding-bottom: 5px;
+  padding-bottom: 80px;
   top: 0;
   bottom: 0;
   right: 0;
