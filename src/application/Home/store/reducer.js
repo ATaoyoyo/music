@@ -2,6 +2,7 @@ import { fromJS } from 'immutable'
 import * as actionTypes from './constants'
 
 const defaultState = fromJS({
+  homePageData: {},
   bannerList: [],
   recommendList: [],
   privateSongsList: [],
@@ -14,6 +15,9 @@ const defaultState = fromJS({
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
+    case actionTypes.CHANGE_HOME_PAGE_DATA:
+      return state.set('homePageData', action.data)
+
     case actionTypes.CHANGE_BANNER_LIST:
       return state.set('bannerList', action.data)
 

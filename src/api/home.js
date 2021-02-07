@@ -5,6 +5,11 @@
  */
 import instance from './service'
 
+// 首页全部内容
+export const getHomePageRequest = () => {
+  return instance.get('/homepage/block/page')
+}
+
 // banner
 export const getBannerRequest = () => {
   return instance.get('/banner?type=2')

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { forceCheck } from 'react-lazyload'
 
@@ -18,6 +18,7 @@ import Leaderboard from './components/Leaderboard/Leaderboard'
 
 const Home = (props) => {
   const {
+    homePageData,
     bannerList,
     recommendList,
     privateSongsList,
@@ -26,6 +27,8 @@ const Home = (props) => {
     newAlbumList,
     enterLoading,
     searchDefault,
+    getHomePageDataDispatch,
+
     getBannerDataDispatch,
     getRecommendDataDispatch,
     getPrivateSongsDataDispatch,
@@ -40,6 +43,7 @@ const Home = (props) => {
 
   useEffect(() => {
     getSearchDefaultDispatch()
+    getHomePageDataDispatch()
     getBannerDataDispatch()
     getRecommendDataDispatch()
     getPrivateSongsDataDispatch()
@@ -56,21 +60,44 @@ const Home = (props) => {
     }
   }, [
     getBannerDataDispatch,
-    getPrivateSongsDataDispatch,
-    getRecommendDataDispatch,
     getFeaturedSongsDataDispatch,
+    getHomePageDataDispatch,
     getLeaderboardDataDispatch,
     getNewAlbumDataDispatch,
-    setEnterLoadingDispatch,
+    getPrivateSongsDataDispatch,
+    getRecommendDataDispatch,
     getSearchDefaultDispatch,
+    setEnterLoadingDispatch,
   ])
 
   useEffect(() => {
     scrollRef.current?.refresh && scrollRef.current.refresh()
   })
 
+  useEffect(() => {
+    formatHomePageData()
+  }, [])
+
+  const formatHomePageData = () => {
+    const homePageDataJS = homePageData ? homePageData.toJS() : {}
+    console.log(homePageDataJS)
+    const content = homePageDataJS.blocks
+    content.forEach((item) => {
+      if (item['blockCode'] === 'HOMEPAGE_BANNER') {
+        formatBannerList(item['extInfo'].banners)
+      } else {
+        //
+
+      }
+    })
+  }
+
+  const [banners, setBanners] = useState([])
+  const formatBannerList = (banner) => {
+    setBanners(banner)
+  }
+
   const searchDefaultJS = searchDefault ? searchDefault.toJS() : '搜点歌曲？'
-  const bannerListJS = bannerList ? bannerList.toJS() : []
   const recommendListJS = recommendList ? recommendList.toJS() : []
   const privateSongsListJS = privateSongsList ? privateSongsList.toJS() : []
   const featuredSongsListJS = featuredSongsList ? featuredSongsList.toJS() : []
@@ -107,17 +134,15 @@ const Home = (props) => {
 
   // 发现图标
   const findIcons = [
-    {icon: 'calendar-day', text: '每日推荐'},
-    {icon: 'broadcast-tower', text: '私人FM'},
-    {icon: 'th-list', text: '歌单'},
-    {icon: 'chart-bar', text: '排行榜'},
-    {icon: 'headset', text: '直播'},
-    {icon: 'compact-disc', text: '数字专辑'},
-    {icon: 'home', text: '歌房'},
-    {icon: 'gamepad', text: '游戏专区'},
+    { icon: 'calendar-day', text: '每日推荐' },
+    { icon: 'broadcast-tower', text: '私人FM' },
+    { icon: 'th-list', text: '歌单' },
+    { icon: 'chart-bar', text: '排行榜' },
+    { icon: 'headset', text: '直播' },
+    { icon: 'compact-disc', text: '数字专辑' },
+    { icon: 'home', text: '歌房' },
+    { icon: 'gamepad', text: '游戏专区' },
   ]
-
-
 
   return (
     <HomeContainer id="wrapper">
@@ -125,7 +150,7 @@ const Home = (props) => {
       {enterLoading ? <Loading /> : null}
       <Scroll ref={scrollRef} direction="vertical" onScroll={forceCheck}>
         <Content>
-          <Banner banners={bannerListJS} />
+          <Banner banners={banners} />
           <Icons icons={findIcons} />
           <Recommend
             desc="推荐歌单"
@@ -147,6 +172,7 @@ const Home = (props) => {
 }
 
 const mapStateToProps = (state) => ({
+  homePageData: state.home.get('homePageData'),
   bannerList: state.home.get('bannerList'),
   recommendList: state.home.get('recommendList'),
   privateSongsList: state.home.get('privateSongsList'),
@@ -158,6 +184,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  getHomePageDataDispatch() {
+    dispatch(actions.getHomePageData())
+  },
   getBannerDataDispatch() {
     dispatch(actions.getBannerList())
   },

@@ -13,7 +13,13 @@ import {
   getLeaderboardRequest,
   getNewAlbumRequest,
   getSearchDefaultRequest,
+  getHomePageRequest,
 } from '../../../api/home'
+
+export const changeHomePageData = (data) => ({
+  type: actionTypes.CHANGE_HOME_PAGE_DATA,
+  data: fromJS(data),
+})
 
 export const changeBannerList = (data) => ({
   type: actionTypes.CHANGE_BANNER_LIST,
@@ -54,6 +60,18 @@ export const changeSearchDefault = (data) => ({
   type: actionTypes.CHANGE_SEARCH_DEFAULT,
   data: fromJS(data),
 })
+
+export const getHomePageData = () => {
+  return (dispatch) => {
+    getHomePageRequest()
+      .then((data) => {
+        dispatch(changeHomePageData(data.data))
+      })
+      .catch((err) => {
+        console.error('homePageData请求出错', err)
+      })
+  }
+}
 
 export const getBannerList = () => {
   return (dispatch) => {
