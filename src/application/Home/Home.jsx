@@ -81,7 +81,7 @@ const Home = (props) => {
   const formatHomePageData = () => {
     const homePageDataJS = homePageData ? homePageData.toJS() : {}
     console.log(homePageDataJS)
-    const content = homePageDataJS.blocks
+    const content = homePageDataJS.blocks || []
     content.forEach((item) => {
       if (item['blockCode'] === 'HOMEPAGE_BANNER') {
         formatBannerList(item['extInfo'].banners)
