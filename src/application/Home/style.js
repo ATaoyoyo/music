@@ -27,6 +27,7 @@ const Input = styled.input.attrs((props) => ({
   color: #333;
   border: 1px solid #fff;
   border-radius: 20px;
+  box-sizing: border-box;
 
   &:focus {
     outline: none;

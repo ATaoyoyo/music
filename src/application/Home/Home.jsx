@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { forceCheck } from 'react-lazyload'
 
@@ -10,15 +10,20 @@ import PrivateSongs from './components/PrivateSons/PrivateSongs'
 import Scroll from '../../components/Scroll/Scroll'
 import Loading from '../../components/Loadding/Loadding'
 import Icon from '../../components/Icon/Icon'
+import Leaderboard from './components/Leaderboard/Leaderboard'
 
 import * as actions from './store/actionCreators'
-
 import { Content, HomeContainer, Input } from './style'
-import Leaderboard from './components/Leaderboard/Leaderboard'
+import {
+  findIcons,
+  recommendSongs,
+  featuredSongs,
+  privateSongs,
+  newAlbumSongs,
+} from './config'
 
 const Home = (props) => {
   const {
-    homePageData,
     bannerList,
     recommendList,
     privateSongsList,
@@ -42,61 +47,22 @@ const Home = (props) => {
   const scrollRef = useRef()
 
   useEffect(() => {
-    getSearchDefaultDispatch()
-    getHomePageDataDispatch()
-    getBannerDataDispatch()
-    getRecommendDataDispatch()
-    getPrivateSongsDataDispatch()
-    getFeaturedSongsDataDispatch()
-    getLeaderboardDataDispatch()
-    getNewAlbumDataDispatch()
-
     let timer = setTimeout(() => {
       setEnterLoadingDispatch()
     }, 500)
 
+    initData()
+
     return () => {
       clearTimeout(timer)
     }
-  }, [
-    getBannerDataDispatch,
-    getFeaturedSongsDataDispatch,
-    getHomePageDataDispatch,
-    getLeaderboardDataDispatch,
-    getNewAlbumDataDispatch,
-    getPrivateSongsDataDispatch,
-    getRecommendDataDispatch,
-    getSearchDefaultDispatch,
-    setEnterLoadingDispatch,
-  ])
+  }, [])
 
   useEffect(() => {
     scrollRef.current?.refresh && scrollRef.current.refresh()
   })
 
-  useEffect(() => {
-    formatHomePageData()
-  }, [])
-
-  const formatHomePageData = () => {
-    const homePageDataJS = homePageData ? homePageData.toJS() : {}
-    console.log(homePageDataJS)
-    const content = homePageDataJS.blocks || []
-    content.forEach((item) => {
-      if (item['blockCode'] === 'HOMEPAGE_BANNER') {
-        formatBannerList(item['extInfo'].banners)
-      } else {
-        //
-
-      }
-    })
-  }
-
-  const [banners, setBanners] = useState([])
-  const formatBannerList = (banner) => {
-    setBanners(banner)
-  }
-
+  const bannerListJs = bannerList ? bannerList.toJS() : []
   const searchDefaultJS = searchDefault ? searchDefault.toJS() : '搜点歌曲？'
   const recommendListJS = recommendList ? recommendList.toJS() : []
   const privateSongsListJS = privateSongsList ? privateSongsList.toJS() : []
@@ -110,47 +76,34 @@ const Home = (props) => {
   const center = <Input placeholder={searchDefaultJS['showKeyword']} />
   const rightText = <Icon icon="search" style={{ color: '#fff' }} />
 
-  // 推荐歌单
-  const recommendSongs = { picUrl: 'picUrl', name: 'name', desc: 'name' }
-  // 精选歌单
-  const featuredSongs = {
-    picUrl: 'coverImgUrl',
-    name: 'name',
-    desc: 'description',
+  const initData = () => {
+    getSearchDefaultDispatch()
+    getHomePageDataDispatch()
+    getBannerDataDispatch()
+    getRecommendDataDispatch()
+    getPrivateSongsDataDispatch()
+    getFeaturedSongsDataDispatch()
+    getLeaderboardDataDispatch()
+    getNewAlbumDataDispatch()
   }
 
-  // 私人订制
-  const privateSongs = {
-    picUrl: 'picUrl',
-    name: 'name',
-    author: `['song']['artists'][0][name]`,
-  }
-  // 新专辑
-  const newAlbumSongs = {
-    picUrl: 'picUrl',
-    name: 'name',
-    author: `['artist']['name']`,
-  }
+  const handPullDown = () => {}
 
-  // 发现图标
-  const findIcons = [
-    { icon: 'calendar-day', text: '每日推荐' },
-    { icon: 'broadcast-tower', text: '私人FM' },
-    { icon: 'th-list', text: '歌单' },
-    { icon: 'chart-bar', text: '排行榜' },
-    { icon: 'headset', text: '直播' },
-    { icon: 'compact-disc', text: '数字专辑' },
-    { icon: 'home', text: '歌房' },
-    { icon: 'gamepad', text: '游戏专区' },
-  ]
+  const handPullUp = () => {}
 
   return (
     <HomeContainer id="wrapper">
       <Header left={leftIcon} center={center} right={rightText} />
       {enterLoading ? <Loading /> : null}
-      <Scroll ref={scrollRef} direction="vertical" onScroll={forceCheck}>
+      <Scroll
+        ref={scrollRef}
+        direction="vertical"
+        onScroll={forceCheck}
+        onPullDown={handPullDown}
+        onPullUp={handPullUp}
+      >
         <Content>
-          <Banner banners={banners} />
+          <Banner banners={bannerListJs} />
           <Icons icons={findIcons} />
           <Recommend
             desc="推荐歌单"

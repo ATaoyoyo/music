@@ -10,6 +10,7 @@ SwiperCore.use([Autoplay, Pagination])
 
 const Banner = (props) => {
   const { banners } = props
+  console.log(banners, 'banners')
 
   const renderSwiperSlide = (slide) => {
     return slide.map((item) => {

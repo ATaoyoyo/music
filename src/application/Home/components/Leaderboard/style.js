@@ -4,6 +4,7 @@ const LeaderboardWrapper = styled.div`
   padding: 10px;
   width: 100%;
   background-color: #fff;
+  box-sizing: border-box;
   //background-image: url('https://s3.music.126.net/mobile-new/img/recommand_bg_2x.png?d045fafc60e017b653f8065a87496922=');
   //background-size: cover;
   //background-position: center;

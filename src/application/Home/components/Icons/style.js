@@ -6,14 +6,15 @@ const SwiperContainer = styled.div`
 `
 
 const Icon = styled.div`
-  width: 45px;
+  width: 48px;
+  text-align: center;
 
   .icon {
     display: block;
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     text-align: center;
-    line-height: 45px;
+    line-height: 48px;
     font-size: 18px;
     color: #d43c33;
     background-color: rgba(255, 102, 102, 0.2);
@@ -24,7 +25,7 @@ const Icon = styled.div`
     display: inline-block;
     width: 100%;
     margin-top: 3px;
-    font-size: 0.75rem;
+    font-size: 12px;
     color: #333;
     text-align: center;
   }

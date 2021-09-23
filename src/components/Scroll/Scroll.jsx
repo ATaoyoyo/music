@@ -121,9 +121,9 @@ ScrollWrapper.defaultProps = {
   leftBounce: true,
   rightBounce: true,
   refresh: true,
-  onScroll: null,
-  onPullDown: null,
-  onPullUp: null,
+  // onScroll: null,
+  // onPullDown: null,
+  // onPullUp: null,
 }
 
 ScrollWrapper.prototype = {
