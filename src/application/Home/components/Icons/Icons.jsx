@@ -6,8 +6,9 @@ import 'swiper/swiper-bundle.css'
 import FIcon from '../../../../components/Icon/Icon'
 
 import { Icon, SwiperContainer } from './style'
+import { findIcons } from '../../config'
 
-const Icons = ({ icons }) => {
+const Icons = () => {
   const [spaceBetween, setSpaceBetween] = useState(-10)
 
   return (
@@ -24,7 +25,7 @@ const Icons = ({ icons }) => {
           clearTimeout(timer)
         }}
       >
-        {icons.map((item) => {
+        {findIcons.map((item) => {
           return (
             <SwiperSlide key={item.text}>
               <Icon>

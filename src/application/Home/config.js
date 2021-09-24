@@ -12,6 +12,7 @@ export const findIcons = [
 
 // 推荐歌单
 export const recommendSongs = { picUrl: 'picUrl', name: 'name', desc: 'name' }
+
 // 精选歌单
 export const featuredSongs = {
   picUrl: 'coverImgUrl',

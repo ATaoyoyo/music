@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import TopInfo from '../../../../components/TopInfo/TopInfo'
 import LazyLoad from '../../../../components/LazyLoad/LazyLoad'
 import { PrivateWrapper, PrivateSong } from './style'
 import Icon from '../../../../components/Icon/Icon'
+import * as actions from '../../store/actionCreators'
 
-const PrivateSongs = ({ songs, songInfo }) => {
+const PrivateSongs = (props) => {
+  const { privateSongsList, getPrivateSongsDataDispatch, songInfo } = props
+  const songs = privateSongsList.toJS()
   const defaultButton = (
     <span>
       更多
       <Icon icon="angle-right" />
     </span>
   )
+
+  useEffect(() => {
+    getPrivateSongsDataDispatch()
+  }, [getPrivateSongsDataDispatch])
 
   return (
     <PrivateWrapper>
@@ -52,4 +60,17 @@ const PrivateSongs = ({ songs, songInfo }) => {
   )
 }
 
-export default PrivateSongs
+const mapStateToProps = (state) => ({
+  privateSongsList: state.home.get('privateSongsList'),
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getPrivateSongsDataDispatch() {
+    dispatch(actions.getPrivateSongsList())
+  },
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(React.memo(PrivateSongs))

@@ -15,7 +15,6 @@ import Leaderboard from './components/Leaderboard/Leaderboard'
 import * as actions from './store/actionCreators'
 import { Content, HomeContainer, Input } from './style'
 import {
-  findIcons,
   recommendSongs,
   featuredSongs,
   privateSongs,
@@ -24,9 +23,7 @@ import {
 
 const Home = (props) => {
   const {
-    bannerList,
     recommendList,
-    privateSongsList,
     featuredSongsList,
     leaderboardList,
     newAlbumList,
@@ -34,9 +31,7 @@ const Home = (props) => {
     searchDefault,
     getHomePageDataDispatch,
 
-    getBannerDataDispatch,
     getRecommendDataDispatch,
-    getPrivateSongsDataDispatch,
     getFeaturedSongsDataDispatch,
     getLeaderboardDataDispatch,
     getNewAlbumDataDispatch,
@@ -62,10 +57,8 @@ const Home = (props) => {
     scrollRef.current?.refresh && scrollRef.current.refresh()
   })
 
-  const bannerListJs = bannerList ? bannerList.toJS() : []
   const searchDefaultJS = searchDefault ? searchDefault.toJS() : '搜点歌曲？'
   const recommendListJS = recommendList ? recommendList.toJS() : []
-  const privateSongsListJS = privateSongsList ? privateSongsList.toJS() : []
   const featuredSongsListJS = featuredSongsList ? featuredSongsList.toJS() : []
   const leaderboardListJS = leaderboardList
     ? leaderboardList.toJS().splice(0, 4)
@@ -79,9 +72,7 @@ const Home = (props) => {
   const initData = () => {
     getSearchDefaultDispatch()
     getHomePageDataDispatch()
-    getBannerDataDispatch()
     getRecommendDataDispatch()
-    getPrivateSongsDataDispatch()
     getFeaturedSongsDataDispatch()
     getLeaderboardDataDispatch()
     getNewAlbumDataDispatch()
@@ -103,14 +94,14 @@ const Home = (props) => {
         onPullUp={handPullUp}
       >
         <Content>
-          <Banner banners={bannerListJs} />
-          <Icons icons={findIcons} />
+          <Banner />
+          <Icons />
           <Recommend
             desc="推荐歌单"
             recommend={recommendListJS}
             songInfo={recommendSongs}
           />
-          <PrivateSongs songs={privateSongsListJS} songInfo={privateSongs} />
+          <PrivateSongs songInfo={privateSongs} />
           <Recommend
             desc="精选歌单"
             recommend={featuredSongsListJS}
@@ -126,7 +117,6 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => ({
   homePageData: state.home.get('homePageData'),
-  bannerList: state.home.get('bannerList'),
   recommendList: state.home.get('recommendList'),
   privateSongsList: state.home.get('privateSongsList'),
   featuredSongsList: state.home.get('featuredSongsList'),
@@ -140,14 +130,8 @@ const mapDispatchToProps = (dispatch) => ({
   getHomePageDataDispatch() {
     dispatch(actions.getHomePageData())
   },
-  getBannerDataDispatch() {
-    dispatch(actions.getBannerList())
-  },
   getRecommendDataDispatch() {
     dispatch(actions.getRecommendList())
-  },
-  getPrivateSongsDataDispatch() {
-    dispatch(actions.getPrivateSongsList())
   },
   getFeaturedSongsDataDispatch() {
     dispatch(actions.getFeaturedSongsList())

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import SwiperCore, { Pagination, Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper-bundle.css'
@@ -6,11 +7,17 @@ import LazyLoad from '../../../../components/LazyLoad/LazyLoad'
 
 import { SwiperContainer } from './style'
 
+import * as actions from '../../store/actionCreators'
+
 SwiperCore.use([Autoplay, Pagination])
 
 const Banner = (props) => {
-  const { banners } = props
-  console.log(banners, 'banners')
+  const { bannerList, getBannerDataDispatch } = props
+  const banners = bannerList.toJS()
+
+  useEffect(() => {
+    getBannerDataDispatch()
+  }, [getBannerDataDispatch])
 
   const renderSwiperSlide = (slide) => {
     return slide.map((item) => {
@@ -43,4 +50,14 @@ const Banner = (props) => {
   )
 }
 
-export default Banner
+const mapStateToProps = (state) => ({
+  bannerList: state.home.get('bannerList'),
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getBannerDataDispatch() {
+    dispatch(actions.getBannerList())
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Banner))
