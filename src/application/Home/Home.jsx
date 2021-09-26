@@ -25,7 +25,6 @@ const Home = (props) => {
   const {
     recommendList,
     featuredSongsList,
-    leaderboardList,
     newAlbumList,
     enterLoading,
     searchDefault,
@@ -33,7 +32,6 @@ const Home = (props) => {
 
     getRecommendDataDispatch,
     getFeaturedSongsDataDispatch,
-    getLeaderboardDataDispatch,
     getNewAlbumDataDispatch,
     setEnterLoadingDispatch,
     getSearchDefaultDispatch,
@@ -60,9 +58,6 @@ const Home = (props) => {
   const searchDefaultJS = searchDefault ? searchDefault.toJS() : '搜点歌曲？'
   const recommendListJS = recommendList ? recommendList.toJS() : []
   const featuredSongsListJS = featuredSongsList ? featuredSongsList.toJS() : []
-  const leaderboardListJS = leaderboardList
-    ? leaderboardList.toJS().splice(0, 4)
-    : []
   const newAlbumListJS = newAlbumList ? newAlbumList.toJS() : []
 
   const leftIcon = <Icon icon="bars" style={{ color: '#fff' }} />
@@ -74,7 +69,6 @@ const Home = (props) => {
     getHomePageDataDispatch()
     getRecommendDataDispatch()
     getFeaturedSongsDataDispatch()
-    getLeaderboardDataDispatch()
     getNewAlbumDataDispatch()
   }
 
@@ -107,7 +101,7 @@ const Home = (props) => {
             recommend={featuredSongsListJS}
             songInfo={featuredSongs}
           />
-          <Leaderboard leaderboard={leaderboardListJS} />
+          <Leaderboard />
           <PrivateSongs songs={newAlbumListJS} songInfo={newAlbumSongs} />
         </Content>
       </Scroll>
@@ -120,7 +114,7 @@ const mapStateToProps = (state) => ({
   recommendList: state.home.get('recommendList'),
   privateSongsList: state.home.get('privateSongsList'),
   featuredSongsList: state.home.get('featuredSongsList'),
-  leaderboardList: state.home.get('leaderboardList'),
+
   newAlbumList: state.home.get('newAlbumList'),
   enterLoading: state.home.get('enterLoading'),
   searchDefault: state.home.get('searchDefault'),
@@ -136,9 +130,7 @@ const mapDispatchToProps = (dispatch) => ({
   getFeaturedSongsDataDispatch() {
     dispatch(actions.getFeaturedSongsList())
   },
-  getLeaderboardDataDispatch() {
-    dispatch(actions.getLeaderboardList())
-  },
+
   getNewAlbumDataDispatch() {
     dispatch(actions.getNewAlbumList())
   },

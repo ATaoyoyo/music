@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import TopInfo from '../../../../components/TopInfo/TopInfo'
 
 import { LeaderboardWrapper } from './style'
 import Icon from '../../../../components/Icon/Icon'
+import * as actions from '../../store/actionCreators'
 
-const Leaderboard = ({ leaderboard }) => {
+const Leaderboard = (props) => {
+  const { leaderboardList, getLeaderboardDataDispatch } = props
+
+  const leaderboard = leaderboardList.toJS().splice(0, 4)
+
+  useEffect(() => {
+    getLeaderboardDataDispatch()
+  }, [getLeaderboardDataDispatch])
+
   const defaultButton = (
     <span>
       更多
@@ -45,4 +55,17 @@ const Leaderboard = ({ leaderboard }) => {
   )
 }
 
-export default Leaderboard
+const mapStateToProps = (state) => ({
+  leaderboardList: state.home.get('leaderboardList'),
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getLeaderboardDataDispatch() {
+    dispatch(actions.getLeaderboardList())
+  },
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(React.memo(Leaderboard))
