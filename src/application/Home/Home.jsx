@@ -25,14 +25,12 @@ const Home = (props) => {
   const {
     recommendList,
     featuredSongsList,
-    newAlbumList,
     enterLoading,
     searchDefault,
     getHomePageDataDispatch,
 
     getRecommendDataDispatch,
     getFeaturedSongsDataDispatch,
-    getNewAlbumDataDispatch,
     setEnterLoadingDispatch,
     getSearchDefaultDispatch,
   } = props
@@ -44,12 +42,21 @@ const Home = (props) => {
       setEnterLoadingDispatch()
     }, 500)
 
-    initData()
+    getSearchDefaultDispatch()
+    getHomePageDataDispatch()
+    getRecommendDataDispatch()
+    getFeaturedSongsDataDispatch()
 
     return () => {
       clearTimeout(timer)
     }
-  }, [])
+  }, [
+    getFeaturedSongsDataDispatch,
+    getHomePageDataDispatch,
+    getRecommendDataDispatch,
+    getSearchDefaultDispatch,
+    setEnterLoadingDispatch,
+  ])
 
   useEffect(() => {
     scrollRef.current?.refresh && scrollRef.current.refresh()
@@ -58,19 +65,10 @@ const Home = (props) => {
   const searchDefaultJS = searchDefault ? searchDefault.toJS() : '搜点歌曲？'
   const recommendListJS = recommendList ? recommendList.toJS() : []
   const featuredSongsListJS = featuredSongsList ? featuredSongsList.toJS() : []
-  const newAlbumListJS = newAlbumList ? newAlbumList.toJS() : []
 
   const leftIcon = <Icon icon="bars" style={{ color: '#fff' }} />
   const center = <Input placeholder={searchDefaultJS['showKeyword']} />
   const rightText = <Icon icon="search" style={{ color: '#fff' }} />
-
-  const initData = () => {
-    getSearchDefaultDispatch()
-    getHomePageDataDispatch()
-    getRecommendDataDispatch()
-    getFeaturedSongsDataDispatch()
-    getNewAlbumDataDispatch()
-  }
 
   const handPullDown = () => {}
 
@@ -102,7 +100,7 @@ const Home = (props) => {
             songInfo={featuredSongs}
           />
           <Leaderboard />
-          <PrivateSongs songs={newAlbumListJS} songInfo={newAlbumSongs} />
+          <PrivateSongs songInfo={newAlbumSongs} />
         </Content>
       </Scroll>
     </HomeContainer>
@@ -115,7 +113,6 @@ const mapStateToProps = (state) => ({
   privateSongsList: state.home.get('privateSongsList'),
   featuredSongsList: state.home.get('featuredSongsList'),
 
-  newAlbumList: state.home.get('newAlbumList'),
   enterLoading: state.home.get('enterLoading'),
   searchDefault: state.home.get('searchDefault'),
 })
@@ -131,9 +128,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actions.getFeaturedSongsList())
   },
 
-  getNewAlbumDataDispatch() {
-    dispatch(actions.getNewAlbumList())
-  },
   setEnterLoadingDispatch() {
     dispatch(actions.getEnterLoad())
   },
