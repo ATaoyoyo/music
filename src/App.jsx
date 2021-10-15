@@ -1,31 +1,23 @@
-import React, { Fragment } from 'react'
-import { HashRouter } from 'react-router-dom'
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 
-import routes from './routes/index'
-import { renderRoutes } from 'react-router-config'
+import routes from './router'
+import Tabbar from './components/Tabbar'
 
-import store from './store'
-import { Provider } from 'react-redux'
-import Tab from './components/Tab/Tab'
-
-// Tab
-const tabs = [
-  { icon: 'music', text: '音乐' },
-  { icon: 'podcast', text: '播客' },
-  { icon: 'user-alt', text: '我的' },
-  { icon: 'microphone-alt', text: 'K歌' },
-  { icon: 'users', text: '云村' },
-]
-
-function App() {
+export default function App() {
   return (
-    <Fragment>
-      <Provider store={store}>
-        <HashRouter>{renderRoutes(routes)}</HashRouter>
-      </Provider>
-      <Tab tabs={tabs} />
-    </Fragment>
+    <div>
+      <Switch>
+        {routes.map((item) => {
+          return (
+            <Route key={item.path} exact path={item.path}>
+              <item.components />
+            </Route>
+          )
+        })}
+      </Switch>
+
+      <Tabbar />
+    </div>
   )
 }
-
-export default App
