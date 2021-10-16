@@ -1,12 +1,13 @@
-import React from 'react'
+import React,{ Fragment } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import routes from './router'
 import Tabbar from './components/Tabbar'
 
+
 export default function App() {
   return (
-    <div>
+    <Fragment>
       <Switch>
         {routes.map((item) => {
           return (
@@ -18,6 +19,6 @@ export default function App() {
       </Switch>
 
       <Tabbar />
-    </div>
+    </Fragment>
   )
 }

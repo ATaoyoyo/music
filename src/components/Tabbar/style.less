@@ -1,15 +1,29 @@
 .tabbar {
   position: fixed;
-  display: flex;
   bottom: 0;
   left: 0;
   right: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 
-  &-item {
-    flex: 1;
-    font-size: 16px;
-    line-height: 50px;
+  .icon {
+    margin: 5px 5px 2px 5px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
     text-align: center;
+
+    &.active {
+      background: linear-gradient(to top, #f05053, #ef473a);
+      color: #f1f1f1;
+    }
+  }
+
+  .label {
+    font-size: 12px;
+
+    &.active {
+      color: #f05053;
+    }
   }
 }
