@@ -5,6 +5,7 @@ module.exports = {
       propList: ['*'],
       selectorBlackList: ['.norem']
     }),
-    require('autoprefixer')
+    require('autoprefixer'),
+    require('tailwindcss')
   ]
 }
